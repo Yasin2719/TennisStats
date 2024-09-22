@@ -8,7 +8,7 @@ public class Result<T> where T : class?
     {
         IsSucess = false;
         StatusCode = statusCode;
-        Errors = [error];
+        Errors = error;
     }
 
     private Result(T? data = null, HttpStatusCode statusCode = HttpStatusCode.OK)
@@ -16,7 +16,7 @@ public class Result<T> where T : class?
 
         IsSucess = true;
         StatusCode = statusCode;
-        Errors = [Error.None];
+        Errors = Error.None;
         Data = data;
     }
 
@@ -24,7 +24,7 @@ public class Result<T> where T : class?
 
     public bool IsFailure => !IsSucess;
 
-    public List<Error> Errors { get; }
+    public Error Errors { get; }
 
     public T? Data { get; }
 
