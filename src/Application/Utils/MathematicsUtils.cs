@@ -1,8 +1,15 @@
-﻿namespace Application.Utils;
+﻿using Domain.Models;
+
+namespace Application.Utils;
 
 public static class MathematicsUtils
 {
     public static double GetMoyenne(List<int> data)
+    {
+        return data.Average();
+    }
+
+    public static double GetMoyenne(List<double> data)
     {
         return data.Average();
     }
@@ -25,5 +32,15 @@ public static class MathematicsUtils
 
             return (firstMiddle + secondMiddle) / 2.0;
         }
+    }
+
+    public static double GetIMCMoyen(List<Player> data)
+    {
+        var imcData = data
+            .Select(
+                player => player.Data.Weight / (player.Data.Height * player.Data.Height))
+            .ToList();
+
+        return GetMoyenne(imcData);
     }
 }

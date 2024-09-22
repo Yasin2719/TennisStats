@@ -34,8 +34,14 @@ public class PlayerService(
     }
 
     
-    public Task<Result<StatsResponse>> GetStats()
+    public async Task<Result<StatsResponse>> GetStats()
     {
-        throw new NotImplementedException();
+        var bestPays = await _countryRepository.GetCountryWithBestScore();
+
+        var imcMoyen = await _playerRepository.GetIMCMoyen();
+
+        var tailleMediane = await _playerRepository.GetTailleMediane();
+
+        return Result<StatsResponse>.Success(new(bestPays, imcMoyen, tailleMediane.GetValueOrDefault()));
     }
 }

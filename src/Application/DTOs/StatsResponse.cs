@@ -2,9 +2,9 @@
 
 namespace Application.DTOs;
 
-public class StatsResponse(Country country, decimal imcMoyen, int tailleMediane)
+public class StatsResponse(Country country, double imcMoyen, double tailleMediane)
 {
     public Country Country { get; set; } = country;
-    public decimal IMCMoyen { get; set; } = imcMoyen;
-    public int TailleMediane { get; set; } = tailleMediane;
+    public double IMCMoyen { get; set; } = imcMoyen;
+    public double TailleMediane { get; set; } = tailleMediane;
 }

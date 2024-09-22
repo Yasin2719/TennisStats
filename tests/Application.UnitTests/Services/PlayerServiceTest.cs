@@ -1,5 +1,4 @@
-﻿using Application.Repositories;
-using Application.Services;
+﻿using Application.Services;
 using Application.UnitTests.Fakers.Repositories;
 
 namespace Application.UnitTests.Services;
@@ -85,5 +84,40 @@ public class PlayerServiceTest
 
         //Assert
         Assert.True(result.IsFailure);
+    }
+
+    [Fact]
+    public async Task GetStats_ShouldReturnSuccess()
+    {
+        //Arrange
+        //Act
+        var result = await _service.GetStats();
+
+        //Assert
+        Assert.True(result.IsSucess);
+    }
+
+    [Fact]
+    public async Task GetStats_ShouldReturnNotNullValue()
+    {
+        //Arrange
+        //Act
+        var result = await _service.GetStats();
+
+        //Assert
+        Assert.NotNull(result.Data);
+    }
+
+    [Fact]
+    public async Task GetStats_ShouldReturnTheCorrectCountry()
+    {
+        //Arrange
+        const string CountryCode = "FRA";
+
+        //Act
+        var result = await _service.GetStats();
+
+        //Assert
+        Assert.Equal(CountryCode, result.Data?.Country.Code);
     }
 }

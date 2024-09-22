@@ -1,4 +1,5 @@
 ﻿using Application.Repositories;
+using Application.Utils;
 using Domain.Models;
 
 namespace Application.UnitTests.Fakers.Repositories;
@@ -52,13 +53,35 @@ internal class FakePlayerRepository : IPlayerRepository
                 Rank = 1,
                 Last = [1, 1],
             }
+        },
+        new() {
+            Id = 3,
+            Firstname = "John",
+            Lastname = "Doe",
+            ShortName = "JoDoe",
+            Picture = "picturelink.com",
+            Sex = "M",
+            Country = new Country()
+            {
+                Picture = "countrypicturelink.com",
+                Code = "FRA"
+            },
+            Data = new PlayerStats()
+            {
+                Age = 20,
+                Height = 180,
+                Weight = 75,
+                Points = 80,
+                Rank = 2,
+                Last = [1, 0],
+            }
         }
     ];
 
 
-    public Task<int> GetIMCMoyen()
+    public async Task<double> GetIMCMoyen()
     {
-        throw new NotImplementedException();
+        return await Task.Run(() => MathematicsUtils.GetIMCMoyen(Players));
     }
 
     public async Task<Player> GetPlayerById(int id)
@@ -73,8 +96,10 @@ internal class FakePlayerRepository : IPlayerRepository
         return await Task.Run(() => Players);
     }
 
-    public Task<int> GetTailleMediane()
+    public async Task<double?> GetTailleMediane()
     {
-        throw new NotImplementedException();
+        return await Task.Run(() => 
+            MathematicsUtils.GetMediane(
+                Players.Select(player => player.Data.Weight).ToList()));
     }
 }
