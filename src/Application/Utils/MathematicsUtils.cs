@@ -38,7 +38,13 @@ public static class MathematicsUtils
     {
         var imcData = data
             .Select(
-                player => player.Data.Weight / (player.Data.Height * player.Data.Height))
+                player =>
+                {
+                    double height = player.Data.Height / 100.0;
+                    double weight = player.Data.Weight / 1000.0;
+
+                    return weight / (height * height);
+                })
             .ToList();
 
         return GetMoyenne(imcData);

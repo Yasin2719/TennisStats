@@ -15,7 +15,7 @@ public class PlayersController(IPlayerService service) : Controller
         try
         {
             var result = await _service.GetPLayers();
-            return Ok(result);
+            return Ok(result.Data);
         }catch (Exception ex)
         {
             return BadRequest(ex.Message);
@@ -34,7 +34,7 @@ public class PlayersController(IPlayerService service) : Controller
                 return BadRequest(result.Errors.Description);
             }
 
-            return Ok(result);
+            return Ok(result.Data);
         }
         catch (Exception ex)
         {
@@ -54,7 +54,7 @@ public class PlayersController(IPlayerService service) : Controller
                 return BadRequest(result.Errors.Description);
             }
 
-            return Ok(result);
+            return Ok(result.Data);
         }
         catch (Exception ex)
         {
