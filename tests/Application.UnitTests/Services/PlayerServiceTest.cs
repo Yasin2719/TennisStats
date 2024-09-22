@@ -13,23 +13,22 @@ public class PlayerServiceTest
         _playerRepository = new FakePlayerRepository();
 
         _service = new PlayerService(
-            _playerRepository, 
-            new FakeCountryRepository());
+            _playerRepository);
     }
 
     [Fact]
-    public async Task GetPlayers_ShouldReturnPlayersList()
+    public async void GetPlayers_ShouldReturnPlayersList()
     {
         //Arrange
         //Act
-        var result = await _service.GetPLayers();
+        var result = _service.GetPLayers();
 
         //Assert
         Assert.NotNull(result.Data);
     }
 
     [Fact]
-    public async Task GetPlayerById_ShouldReturnSuccess_WhenPlayerExist()
+    public void GetPlayerById_ShouldReturnSuccess_WhenPlayerExist()
     {
         //Arrange
         int playerId = _playerRepository
@@ -37,14 +36,14 @@ public class PlayerServiceTest
             .FirstOrDefault()!.Id;
 
         //Act
-        var result = await _service.GetPlayerById(playerId);
+        var result = _service.GetPlayerById(playerId);
 
         //Assert
         Assert.True(result.IsSucess);
     }
 
     [Fact]
-    public async Task GetPlayerById_ShouldNotNull_WhenPlayerExist()
+    public void GetPlayerById_ShouldNotNull_WhenPlayerExist()
     {
         //Arrange
         int playerId = _playerRepository
@@ -52,14 +51,14 @@ public class PlayerServiceTest
             .FirstOrDefault()!.Id;
 
         //Act
-        var result = await _service.GetPlayerById(playerId);
+        var result = _service.GetPlayerById(playerId);
 
         //Assert
         Assert.NotNull(result.Data);
     }
 
     [Fact]
-    public async Task GetPlayerById_ShouldReturnExpectedPlayer_WhenPlayerExist()
+    public void GetPlayerById_ShouldReturnExpectedPlayer_WhenPlayerExist()
     {
         //Arrange
         int playerId = _playerRepository
@@ -67,57 +66,57 @@ public class PlayerServiceTest
             .FirstOrDefault()!.Id;
 
         //Act
-        var result = await _service.GetPlayerById(playerId);
+        var result = _service.GetPlayerById(playerId);
 
         //Assert
         Assert.Equal(playerId, result.Data?.Id);
     }
 
     [Fact]
-    public async Task GetPlayerById_ShouldReturnFailure_WhenPlayerNotExist()
+    public void GetPlayerById_ShouldReturnFailure_WhenPlayerNotExist()
     {
         //Arrange
         int playerId = int.MaxValue;
 
         //Act
-        var result = await _service.GetPlayerById(playerId);
+        var result = _service.GetPlayerById(playerId);
 
         //Assert
         Assert.True(result.IsFailure);
     }
 
     [Fact]
-    public async Task GetStats_ShouldReturnSuccess()
+    public void GetStats_ShouldReturnSuccess()
     {
         //Arrange
         //Act
-        var result = await _service.GetStats();
+        var result = _service.GetStats();
 
         //Assert
         Assert.True(result.IsSucess);
     }
 
     [Fact]
-    public async Task GetStats_ShouldReturnNotNullValue()
+    public void GetStats_ShouldReturnNotNullValue()
     {
         //Arrange
         //Act
-        var result = await _service.GetStats();
+        var result = _service.GetStats();
 
         //Assert
         Assert.NotNull(result.Data);
     }
 
     [Fact]
-    public async Task GetStats_ShouldReturnTheCorrectCountry()
+    public void GetStats_ShouldReturnTheCorrectCountry()
     {
         //Arrange
         const string CountryCode = "FRA";
 
         //Act
-        var result = await _service.GetStats();
+        var result = _service.GetStats();
 
         //Assert
-        Assert.Equal(CountryCode, result.Data?.Country.Code);
+        Assert.Equal(CountryCode, result.Data?.CountryWithBestScore.Code);
     }
 }

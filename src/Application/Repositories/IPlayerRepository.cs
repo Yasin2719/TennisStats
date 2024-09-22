@@ -4,8 +4,9 @@ namespace Application.Repositories;
 
 public interface IPlayerRepository
 {
-    Task<IEnumerable<Player>> GetPlayers();
-    Task<Player> GetPlayerById(int id);
-    Task<double> GetIMCMoyen();
-    Task<double?> GetTailleMediane();
+    IEnumerable<Player> GetPlayers();
+    Player GetPlayerById(int id);
+    double GetIMCMoyen();
+    double? GetTailleMediane();
+    Country? GetCountryWithBestScore();
 }

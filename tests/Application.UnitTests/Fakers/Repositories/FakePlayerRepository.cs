@@ -79,27 +79,42 @@ internal class FakePlayerRepository : IPlayerRepository
     ];
 
 
-    public async Task<double> GetIMCMoyen()
+    public double GetIMCMoyen()
     {
-        return await Task.Run(() => MathematicsUtils.GetIMCMoyen(Players));
+        return MathematicsUtils.GetIMCMoyen(Players);
     }
 
-    public async Task<Player> GetPlayerById(int id)
+    public Player? GetPlayerById(int id)
     {
         var player = Players.Where(player => player.Id == id).FirstOrDefault();
 
-        return await Task.Run(() => player);
+        return player;
     }
 
-    public async Task<IEnumerable<Player>> GetPlayers()
+    public IEnumerable<Player> GetPlayers()
     {
-        return await Task.Run(() => Players);
+        return Players;
     }
 
-    public async Task<double?> GetTailleMediane()
+    public double? GetTailleMediane()
     {
-        return await Task.Run(() => 
-            MathematicsUtils.GetMediane(
-                Players.Select(player => player.Data.Weight).ToList()));
+        return MathematicsUtils.GetMediane(
+            Players.Select(player => player.Data.Weight).ToList());
+    }
+
+    public Country? GetCountryWithBestScore()
+    {
+        return (
+            from player in Players
+             group player by player.Country.Code into newGroup
+             orderby newGroup.Key
+             select new
+             {
+                 totalPoints = newGroup.Sum(x => x.Data.Points),
+                 country = newGroup.Select(x => x.Country)
+             })
+             .OrderByDescending(x => x.totalPoints)
+             .Select(x => x.country.First())
+             .FirstOrDefault();
     }
 }

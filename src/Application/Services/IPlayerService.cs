@@ -6,7 +6,7 @@ namespace Application.Services;
 
 public interface IPlayerService
 {
-    Task<Result<IEnumerable<Player>>> GetPLayers();
-    Task<Result<Player>> GetPlayerById(int id);
-    Task<Result<StatsResponse>> GetStats();
+    Result<IEnumerable<Player>> GetPLayers();
+    Result<Player> GetPlayerById(int id);
+    Result<StatsResponse> GetStats();
 }

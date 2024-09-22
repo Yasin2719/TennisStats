@@ -22,26 +22,42 @@ public class PlayerRepository : IPlayerRepository
         }
     }
 
-    public async Task<double> GetIMCMoyen()
+    public double GetIMCMoyen()
     {
         return MathematicsUtils.GetIMCMoyen(_players);
     }
 
-    public async Task<Player?> GetPlayerById(int id)
+    public Player? GetPlayerById(int id)
     {
         return _players
             .Where(player => player.Id == id)
             .FirstOrDefault();
     }
 
-    public async Task<IEnumerable<Player>> GetPlayers()
+    public IEnumerable<Player> GetPlayers()
     {
         return _players;
     }
 
-    public async Task<double?> GetTailleMediane()
+    public double? GetTailleMediane()
     {
         return MathematicsUtils.GetMediane(
                 _players.Select(player => player.Data.Weight).ToList());
+    }
+
+    public Country? GetCountryWithBestScore()
+    {
+        return (
+            from player in _players
+            group player by player.Country.Code into newGroup
+            orderby newGroup.Key
+            select new
+            {
+                totalPoints = newGroup.Sum(x => x.Data.Points),
+                country = newGroup.Select(x => x.Country)
+            })
+             .OrderByDescending(x => x.totalPoints)
+             .Select(x => x.country.First())
+             .FirstOrDefault();
     }
 }

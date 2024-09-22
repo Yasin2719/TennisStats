@@ -7,21 +7,19 @@ using Domain.Models;
 namespace Application.Services;
 
 public class PlayerService(
-    IPlayerRepository playerRepository, 
-    ICountryRepository countryRepository) : IPlayerService 
+    IPlayerRepository playerRepository) : IPlayerService 
 {
     private readonly IPlayerRepository _playerRepository = playerRepository;
-    private readonly ICountryRepository _countryRepository = countryRepository;
 
-    public async Task<Result<IEnumerable<Player>>> GetPLayers()
+    public Result<IEnumerable<Player>> GetPLayers()
     {
-        var players = await _playerRepository.GetPlayers();
+        var players = _playerRepository.GetPlayers();
         return Result<IEnumerable<Player>>.Success(players);
     }
 
-    public async Task<Result<Player>> GetPlayerById(int id)
+    public Result<Player> GetPlayerById(int id)
     {
-        var player = await _playerRepository.GetPlayerById(id);
+        var player = _playerRepository.GetPlayerById(id);
 
         if(player is null)
         {
@@ -34,13 +32,13 @@ public class PlayerService(
     }
 
     
-    public async Task<Result<StatsResponse>> GetStats()
+    public Result<StatsResponse> GetStats()
     {
-        var bestPays = await _countryRepository.GetCountryWithBestScore();
+        var bestPays = _playerRepository.GetCountryWithBestScore();
 
-        var imcMoyen = await _playerRepository.GetIMCMoyen();
+        var imcMoyen = _playerRepository.GetIMCMoyen();
 
-        var tailleMediane = await _playerRepository.GetTailleMediane();
+        var tailleMediane = _playerRepository.GetTailleMediane();
 
         return Result<StatsResponse>.Success(new(bestPays, imcMoyen, tailleMediane.GetValueOrDefault()));
     }

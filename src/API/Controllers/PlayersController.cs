@@ -10,11 +10,11 @@ public class PlayersController(IPlayerService service) : Controller
     private readonly IPlayerService _service = service;
 
     [HttpGet]
-    public async Task<IActionResult> Index()
+    public IActionResult Index()
     {
         try
         {
-            var result = await _service.GetPLayers();
+            var result = _service.GetPLayers();
             return Ok(result.Data);
         }catch (Exception ex)
         {
@@ -23,11 +23,11 @@ public class PlayersController(IPlayerService service) : Controller
     }
 
     [HttpGet("{id}")]
-    public async Task<IActionResult> Details(int id)
+    public IActionResult Details(int id)
     {
         try
         {
-            var result = await _service.GetPlayerById(id);
+            var result = _service.GetPlayerById(id);
 
             if (result.IsFailure)
             {
@@ -43,11 +43,11 @@ public class PlayersController(IPlayerService service) : Controller
     }
 
     [HttpGet("/stats")]
-    public async Task<IActionResult> GetStats()
+    public IActionResult GetStats()
     {
         try
         {
-            var result = await _service.GetStats();
+            var result = _service.GetStats();
 
             if (result.IsFailure)
             {
