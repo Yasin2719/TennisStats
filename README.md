@@ -15,7 +15,7 @@ Ces projets sont présents dans le dossier src.
 
 ## Tests
 
-Le projet est tésté et contien un projet xUnit permettant de tester, principalement, la partie Application.
+Le projet est tésté et contient un projet xUnit permettant de tester, principalement, la partie Application.
 
 pour lancer les tests, veuillez exécuter la commande suivante dans le terminal:
 
